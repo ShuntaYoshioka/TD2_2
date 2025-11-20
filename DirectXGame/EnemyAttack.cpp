@@ -13,7 +13,6 @@ void EnemyAttack::Initialize(const KamataEngine::Vector3& position, const Kamata
 }
 
 void EnemyAttack::Update() {
-	
 
 		worldTransform_.translation_ = position_;
 		worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
