@@ -476,6 +476,12 @@ void Player::OnCollision(const Enemy* enemy) {
 	isDead_ = true;
 }
 
+void Player::OnCollision(const EnemyAttack* enemyAttack) {
+	(void)enemyAttack;
+	// 当たった際の挙動
+	isDead_ = true;
+}
+
 
 KamataEngine::Vector3 Player::CornerPosition(const KamataEngine::Vector3& center, Corner corner) { 
 	

@@ -4,6 +4,8 @@
 
 class Enemy;
 
+class EnemyAttack;
+
 class MapChipField;
 
 class Player {
@@ -97,6 +99,8 @@ public:
 
 	//衝突応答
 	void OnCollision(const Enemy* enemy);
+	void OnCollision(const EnemyAttack* enemyAttack); 
+
 
 
 	// げった

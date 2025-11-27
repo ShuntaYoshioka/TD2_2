@@ -2,20 +2,21 @@
 #include "KamataEngine.h"
 #include "MyMath.h"
 
-struct AABB;
+class Player;
 
 class EnemyAttack {
 public:
 	void Initialize(const KamataEngine::Vector3& position, const KamataEngine::Vector3& size, KamataEngine::Model* model);
 	void Update();
+	void Move();
 	void Draw(KamataEngine::Camera* camera);
 
 
 	// AABB 取得
 	AABB GetAABB() const;
 
-	//自機に当たったか
-	bool IsReached() const { return reached_; }
+	// 衝突応答
+	void OnCollision(const Player* player);
 
 	KamataEngine::Vector3 GetPosition() const { return position_; }
 
@@ -27,7 +28,10 @@ private:
 	KamataEngine::Model* model_ = nullptr;
 	KamataEngine::WorldTransform worldTransform_;
 
-	bool reached_ = false;
-	bool isFalling_ = false; // 落下開始フラグ
+	KamataEngine::Vector3 initialPosition_; 
+
+	bool isFalling_ = false;
+	float timer_ = 0.0f;
+	float waitTime_ = 0.0f; 
 
 };
