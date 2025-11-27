@@ -253,7 +253,9 @@ void GameScene::Update() {
 	}
 
 	// カメラコントロール
-	cameraController_->Update();
+	if (!player_->isHit()) {
+		cameraController_->Update();
+	}
 
 	// デバッグカメラの更新
 	debugCamera_->Update();

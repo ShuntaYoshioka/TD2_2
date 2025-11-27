@@ -106,6 +106,8 @@ public:
 	// げった
 	bool isDead() const { return isDead_; }
 
+	bool isHit() const { return isHit_; }
+
 private:
 	// ワールド変換データ
 	KamataEngine::WorldTransform worldTransform_;
