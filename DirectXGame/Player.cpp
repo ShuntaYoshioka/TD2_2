@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <numbers>
 #include "MapChipField.h"
+#include"EnemyAttack.h"
 
 using namespace KamataEngine::MathUtility;
 
@@ -20,25 +21,45 @@ void Player::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera
 
 
 void Player::Update() {
+	if (isHit_) {
+		hitTimer_ -= 1.0f / 60.0f; // 1フレームごと減らす
+		if (hitTimer_ <= 0.0f) {
+			isHit_ = false;  // 無敵解除
+			knockback_ = {}; // ノックバックリセット
+		} else {
+			//被弾語の落下
+		  knockback_.y -= kGravityAcceleration;
+			knockback_.y = std::max(knockback_.y, -kLimitFallSpeed);
 
-	InputMove();
 
+			CollisionMapInfo collisionMapInfo;
+			collisionMapInfo.move = knockback_;
+			CheckMapCollision(collisionMapInfo);
+			// 移動
+			CheckMapMove(collisionMapInfo);
 
-	//2
-	CollisionMapInfo collisionMapInfo;
+		}
+	} else {
 
-	collisionMapInfo.move = velocity_;
+		InputMove();
 
-	CheckMapCollision(collisionMapInfo);
-	//3 
-	// 移動
-	CheckMapMove(collisionMapInfo);
-	//4
-	CheckMapCeiling(collisionMapInfo);
-	//5
-	
-	//6
-	CheckMapLanding(collisionMapInfo);
+		// 2
+		CollisionMapInfo collisionMapInfo;
+
+		collisionMapInfo.move = velocity_;
+
+		CheckMapCollision(collisionMapInfo);
+		// 3
+		//  移動
+		CheckMapMove(collisionMapInfo);
+		// 4
+		CheckMapCeiling(collisionMapInfo);
+		// 5
+
+		// 6
+		CheckMapLanding(collisionMapInfo);
+	}
+
 	
 	
 	
@@ -69,6 +90,7 @@ void Player::Update() {
 	//}
 
 	
+
 
 	AnimateTurn();
 
@@ -472,14 +494,19 @@ AABB Player::GetAABB() {
 
 void Player::OnCollision(const Enemy* enemy) {
 	(void)enemy;
-	// 当たった際の挙動
-	isDead_ = true;
+	// 当たった際の挙動 後で変える
 }
 
-void Player::OnCollision(const EnemyAttack* enemyAttack) {
+void Player::OnCollision(const EnemyAttack* enemyAttack) { 
 	(void)enemyAttack;
-	// 当たった際の挙動
-	isDead_ = true;
+	  if (isHit_) {
+		return;
+	}
+	  isHit_ = true;
+	hitTimer_ = kHitDuration;
+
+	  // 上方向に跳ねるだけ
+	knockback_.y = 0.5f;
 }
 
 
@@ -497,4 +524,17 @@ KamataEngine::Vector3 Player::CornerPosition(const KamataEngine::Vector3& center
 }
 
 
-void Player::Draw() { model_->Draw(worldTransform_, *camera_); }
+void Player::Draw() {
+	if (isHit_) {
+		blinkingTimer += 1.0f / 60.0f;
+		
+	} else {
+		blinkingTimer = 0;
+	}
+
+	if (static_cast<int>(blinkingTimer * 10) % 2 == 0) {
+		model_->Draw(worldTransform_, *camera_);
+	}
+	
+}
+

@@ -18,7 +18,7 @@ public:
 	// 衝突応答
 	void OnCollision(const Player* player);
 
-	KamataEngine::Vector3 GetPosition() const { return position_; }
+	KamataEngine::Vector3 GetWorldPosition()const;
 
 	bool isFalling() const { return isFalling_; }
 

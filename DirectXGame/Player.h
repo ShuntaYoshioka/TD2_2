@@ -126,6 +126,13 @@ private:
 	//着地時の距離減衰率
 	static inline const float kAttenuationWall = 0.5f;
 
-	// ですフラグ
+	//被弾フラグ
 	bool isDead_ = false;
+
+	// 被ダメージ状態管理
+	float blinkingTimer;
+	bool isHit_ = false;  // ダメージ中か
+	float hitTimer_ = 0.0f;          //無敵時間タイマー
+	const float kHitDuration = 1.0f; //無敵時間
+	KamataEngine::Vector3 knockback_;
 };
