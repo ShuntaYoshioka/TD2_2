@@ -29,13 +29,21 @@ void GameScene::Initialize() {
 	player_ = new Player();
 
 	// 自キャラ座標をマップチップ番号で指定
-	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(6, 10);
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(6, 14);
 
-	// 敵生成
-	for (int32_t i = 0; i < 6; ++i) {
+	// 敵の攻撃をマップチップ番号で指定
+	std::vector<KamataEngine::Vector2> enemyPositions = {
+	    {6,  5 }, // 1つ目
+	    {30, 5 },
+	    {6,  12},
+	    {30, 12},
+	};
+
+	// 敵の初期化
+	for (const auto& tilePos : enemyPositions) {
 		Enemy* newEnemy = new Enemy();
-		Vector3 enemyPosition = {playerPosition.x + 8.0f * (i + 2), playerPosition.y + 1.0f * (i + 2), playerPosition.z};
-
+		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(static_cast<uint32_t>(tilePos.x), static_cast<uint32_t>(tilePos.y));
+		Vector3 enemySize = {1.0f, 1.0f, 1.0f};
 		newEnemy->Initialize(modelEnemy_, &camera_, enemyPosition);
 
 		enemies_.push_back(newEnemy);
@@ -72,7 +80,7 @@ void GameScene::Initialize() {
 	// 敵の攻撃をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyAttackPositions = {
 	    {3,  1}, // 1つ目
-        {5,  1},
+	    {5,  1},
         {7,  1},
         {9,  1},
         {11, 1},
@@ -82,17 +90,18 @@ void GameScene::Initialize() {
         {19, 1},
         {21, 1},
         {23, 1},
-        {25, 1}, 
-		{27, 1},
-		{29, 1},
-		{31, 1},
-    };
+        {25, 1},
+        {27, 1},
+        {29, 1},
+        {31, 1},
+	};
+
 	// 果物の初期化
 	for (const auto& tilePos : enemyAttackPositions) {
 		EnemyAttack* newenemyAttack = new EnemyAttack();
 		Vector3 enemyAttackPosition = mapChipField_->GetMapChipPositionByIndex(static_cast<uint32_t>(tilePos.x), static_cast<uint32_t>(tilePos.y));
-		Vector3 enemySize = {1.0f, 1.0f, 1.0f};
-		newenemyAttack->Initialize(enemyAttackPosition, enemySize, modelEnemyAttack_);
+		Vector3 enemyAttackSize = {1.0f, 1.0f, 1.0f};
+		newenemyAttack->Initialize(enemyAttackPosition, enemyAttackSize, modelEnemyAttack_);
 		enemyAttacks_.push_back(newenemyAttack);
 	}
 
@@ -183,6 +192,10 @@ void GameScene::ChangePhase() {
 			deathParticles_ = new DeathParticles;
 			deathParticles_->Initialize(modelDeathParticle_, &camera_, deathParticlesPosition);
 		}
+
+		if (Enemy::isAllEnemiesCleared) {
+			phase_ = Phase::kClear;
+		}
 		break;
 	case Phase::kDeath:
 
@@ -192,6 +205,10 @@ void GameScene::ChangePhase() {
 		}
 
 		break;
+
+	case Phase::kClear:
+		phase_ = Phase::kFadeOut;
+		fade_->Start(Fade::Status::FadeOut, 1.0f);
 
 	case Phase::kFadeIn:
 		if (fade_->isFinished()) {

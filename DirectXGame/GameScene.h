@@ -26,6 +26,7 @@ public:
 		kFadeIn,
 		kPlay,
 		kDeath,
+		kClear,
 		kFadeOut,
 	};
 
@@ -67,7 +68,7 @@ public:
 	Skydome* skydome_ = nullptr;
 
 	// 敵
-	std::list<Enemy*> enemies_;
+	std::vector<Enemy*> enemies_;
 
 	//果物
 	std::vector<EnemyAttack*> enemyAttacks_;
@@ -104,8 +105,6 @@ public:
 
 	Fade* fade_ = nullptr;
 
-	float enemySpawnTimer_ = 0.0f;
-	size_t nextEnemyIndex_ = 0;
-
 	std::vector<bool> enemyAttackStartFlags_; // 落下を開始したかどうか
+
 };

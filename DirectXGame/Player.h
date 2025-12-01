@@ -98,7 +98,7 @@ public:
 	AABB GetAABB();
 
 	//衝突応答
-	void OnCollision(const Enemy* enemy);
+	void OnCollision(Enemy* enemy);
 	void OnCollision(const EnemyAttack* enemyAttack); 
 
 

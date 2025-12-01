@@ -6,7 +6,12 @@ void Enemy::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera,
 	
 	model_ = model;
 	camera_ = camera;
-	walkTimer_ = 0.0f;
+
+	spawnPosition_ = position;
+	alive_ = false;
+	cleared_ = false;
+	clearCount = 0;
+	isAllEnemiesCleared = false;
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
@@ -16,16 +21,37 @@ void Enemy::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera,
 
 void Enemy::Update() {
 
-	// 位置更新
-	worldTransform_.translation_.x += velocity_.x;
-	worldTransform_.translation_.y += velocity_.y;
-
+	   if (!isAllEnemiesCleared) {
+		spawnTimer += 1.0f;
+	}
+	   if (!alive_ && !cleared_) {
+		   if (spawnTimer >= spawnDelay) {
+			   alive_ = true;
+			   worldTransform_.translation_ = spawnPosition_;
+		   }
+	   }
 	// 行列の更新
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	// 行列を定義バッファに転送
 	worldTransform_.TransferMatrix();
 }
 
+void Enemy::Kill() {
+	if (alive_ && !cleared_) {
+		alive_ = false;
+		cleared_ = true;
+
+		clearCount++;
+
+		// 全部倒したらフラグ
+		if (clearCount >= 4) {
+			isAllEnemiesCleared = true;
+		}
+
+		// 共有タイマーはここでリセット
+		spawnTimer = 0.0f;
+	}
+}
 
 KamataEngine::Vector3 Enemy::GetWorldPosition() {
 	KamataEngine::Vector3 worldPos;
@@ -60,4 +86,8 @@ AABB Enemy::GetAABB() {
 	return aabb;
 }
 
-void Enemy::Draw() { model_->Draw(worldTransform_, *camera_); }
+void Enemy::Draw() {
+	if (alive_) {
+		model_->Draw(worldTransform_, *camera_);
+	}
+}

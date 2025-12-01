@@ -11,26 +11,33 @@ public:
 	void Update();
 	void Draw();
 
-	// 歩行スピード
-	static inline const float kWalkSpeed = 0.05f;
+  bool IsAlive() const { return alive_; }
+	bool IsCleared() const { return cleared_; }
 
-	 static inline const float kGravity = 0.05f;  // 重力加速度
-	static inline const float kJumpSpeed = 0.5f; // ジャンプ初速
-	static inline const float kGroundY = 0.0f;   // 接地高さ（地面のy座標）
-
-	float walkTimer_ = 0.0f;
+	void Kill();
+	void MarkCleared() { cleared_ = true; }
 
 	KamataEngine::Vector3 velocity_ = {};
 	// AABBを取得
 	AABB GetAABB();
 	KamataEngine::Vector3 GetWorldPosition();
 
-	//衝突応答
+	// 衝突応答
 	void OnCollision(const Player* player);
+
+	inline static int clearCount = 0; // 衝突で増える
+	inline static bool isAllEnemiesCleared = false; 
+
+	inline static float spawnTimer = 0.0f;
+	inline static float spawnDelay = 20.0f;
+
 
 private:
 	KamataEngine::WorldTransform worldTransform_; // ワールドトランスふぉーむ
 	KamataEngine::Model* model_ = nullptr;        // モデル
 	KamataEngine::Camera* camera_ = nullptr;      // カメラ
-	;
+
+	bool alive_ = false;       // 現在表示中か
+	bool cleared_ = false;     // 衝突済みか
+	KamataEngine::Vector3 spawnPosition_;
 };

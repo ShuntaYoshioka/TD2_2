@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <numbers>
 #include "MapChipField.h"
+#include "enemy.h"
 #include"EnemyAttack.h"
 
 using namespace KamataEngine::MathUtility;
@@ -492,9 +493,11 @@ AABB Player::GetAABB() {
 	return aabb; 
 }
 
-void Player::OnCollision(const Enemy* enemy) {
-	(void)enemy;
-	// 当たった際の挙動 後で変える
+void Player::OnCollision(Enemy* enemy) {
+	if (!enemy->IsAlive() || enemy->IsCleared())
+		return;
+
+	enemy->Kill();
 }
 
 void Player::OnCollision(const EnemyAttack* enemyAttack) { 
@@ -506,7 +509,7 @@ void Player::OnCollision(const EnemyAttack* enemyAttack) {
 	hitTimer_ = kHitDuration;
 
 	  // 上方向に跳ねるだけ
-	knockback_.y = 0.5f;
+	knockback_.y = 0.7f;
 }
 
 
