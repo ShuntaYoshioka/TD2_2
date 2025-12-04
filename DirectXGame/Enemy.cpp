@@ -10,8 +10,10 @@ void Enemy::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera,
 	spawnPosition_ = position;
 	alive_ = false;
 	cleared_ = false;
-	clearCount = 0;
+
 	isAllEnemiesCleared = false;
+	clearCount = 0;
+
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
@@ -21,15 +23,20 @@ void Enemy::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera,
 
 void Enemy::Update() {
 
-	   if (!isAllEnemiesCleared) {
-		spawnTimer += 1.0f;
+	if (cleared_) {
+		return;
 	}
-	   if (!alive_ && !cleared_) {
-		   if (spawnTimer >= spawnDelay) {
-			   alive_ = true;
-			   worldTransform_.translation_ = spawnPosition_;
-		   }
-	   }
+
+	
+	if (!alive_) {
+		spawnTimer_ += 1.0f;
+
+		if (spawnTimer_ >= spawnDelay_) {
+			alive_ = true; 
+			worldTransform_.translation_ = spawnPosition_;
+		}
+		return;
+	}
 	// 行列の更新
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	// 行列を定義バッファに転送
@@ -48,8 +55,13 @@ void Enemy::Kill() {
 			isAllEnemiesCleared = true;
 		}
 
-		// 共有タイマーはここでリセット
-		spawnTimer = 0.0f;
+	}
+}
+
+void Enemy::disappear() {
+	if (!cleared_) {
+		alive_ = false;
+		spawnTimer_ = 0.0f;
 	}
 }
 

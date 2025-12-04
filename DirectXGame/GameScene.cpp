@@ -31,7 +31,7 @@ void GameScene::Initialize() {
 	// 自キャラ座標をマップチップ番号で指定
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(6, 14);
 
-	// 敵の攻撃をマップチップ番号で指定
+	// 弱点をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyPositions = {
 	    {6,  5 }, // 1つ目
 	    {30, 5 },
@@ -164,6 +164,13 @@ void GameScene::CheckAllCollisions() {
 			player_->OnCollision(enemy);
 
 			enemy->OnCollision(player_);
+
+			 for (Enemy* e2 : enemies_) {
+				if (e2 != enemy) {
+					e2->disappear();
+				}
+			}
+			 break;
 		}
 	}
 
@@ -188,9 +195,9 @@ void GameScene::ChangePhase() {
 		if (player_->isDead() == true) {
 			phase_ = Phase::kDeath;
 
-			const Vector3& deathParticlesPosition = player_->GetWorldPosition();
-			deathParticles_ = new DeathParticles;
-			deathParticles_->Initialize(modelDeathParticle_, &camera_, deathParticlesPosition);
+			//const Vector3& deathParticlesPosition = player_->GetWorldPosition();
+			//deathParticles_ = new DeathParticles;
+			//deathParticles_->Initialize(modelDeathParticle_, &camera_, deathParticlesPosition);
 		}
 
 		if (Enemy::isAllEnemiesCleared) {
@@ -251,6 +258,7 @@ void GameScene::Update() {
 		}
 		break;
 	}
+
 
 	// 共通の処理
 	if (phase_ != Phase::kFadeOut) {
@@ -365,6 +373,10 @@ GameScene::~GameScene() {
 	delete fade_;
 	for (Enemy* enemy : enemies_) {
 		delete enemy;
+	}
+
+	for (EnemyAttack* enemyAttack : enemyAttacks_) {
+		delete enemyAttack;
 	}
 	delete modelSkydome_;
 	delete mapChipField_;

@@ -91,6 +91,7 @@ void ChangeScene() {
 			//新scene生成と初期化
 			gameScene = new GameScene;
 			gameScene->Initialize();
+
 		}
 		break;
 

@@ -13,8 +13,12 @@ public:
 
   bool IsAlive() const { return alive_; }
 	bool IsCleared() const { return cleared_; }
+  static float GetSpawnTimer() { return spawnTimer_; }
+  static float GetSpawnDelay() { return spawnDelay_; }
 
-	void Kill();
+
+	void Kill(); 
+	void disappear();
 	void MarkCleared() { cleared_ = true; }
 
 	KamataEngine::Vector3 velocity_ = {};
@@ -28,16 +32,16 @@ public:
 	inline static int clearCount = 0; // 衝突で増える
 	inline static bool isAllEnemiesCleared = false; 
 
-	inline static float spawnTimer = 0.0f;
-	inline static float spawnDelay = 20.0f;
-
+	inline static float spawnTimer_ = 0.0f;
+	inline static float spawnDelay_ = 120.0f;
 
 private:
 	KamataEngine::WorldTransform worldTransform_; // ワールドトランスふぉーむ
 	KamataEngine::Model* model_ = nullptr;        // モデル
 	KamataEngine::Camera* camera_ = nullptr;      // カメラ
 
-	bool alive_ = false;       // 現在表示中か
-	bool cleared_ = false;     // 衝突済みか
+	bool alive_ = false; // 現在表示中か
+	bool cleared_ = false; // 衝突済みか
+
 	KamataEngine::Vector3 spawnPosition_;
 };
