@@ -13,8 +13,6 @@ public:
 
   bool IsAlive() const { return alive_; }
 	bool IsCleared() const { return cleared_; }
-  static float GetSpawnTimer() { return spawnTimer_; }
-  static float GetSpawnDelay() { return spawnDelay_; }
 
 
 	void Kill(); 
@@ -33,7 +31,7 @@ public:
 	inline static bool isAllEnemiesCleared = false; 
 
 	inline static float spawnTimer_ = 0.0f;
-	inline static float spawnDelay_ = 200.0f;
+	inline static float spawnDelay_ = 1000.0f;
 
 private:
 	KamataEngine::WorldTransform worldTransform_; // ワールドトランスふぉーむ

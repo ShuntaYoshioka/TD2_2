@@ -239,7 +239,7 @@ void GameScene::Update() {
 
 		break;
 	case Phase::kDeath:
-		deathParticles_->Update();
+		//deathParticles_->Update();
 		break;
 	case Phase::kFadeIn:
 
@@ -276,8 +276,15 @@ void GameScene::Update() {
 
 	// カメラコントロール
 	if (!player_->isHit()) {
-		cameraController_->Update();
+
+			cameraController_->Update();
+	} else {
+		if (player_->GetHitTimer() > 0.3f) {
+
+			cameraController_->Update();
+		}
 	}
+	
 
 	// デバッグカメラの更新
 	debugCamera_->Update();

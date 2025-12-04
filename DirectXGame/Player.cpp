@@ -27,6 +27,7 @@ void Player::Update() {
 		if (hitTimer_ <= 0.0f) {
 			isHit_ = false;  // 無敵解除
 			knockback_ = {}; // ノックバックリセット
+			hitTimer_ = 0.0f;
 		} else {
 			//被弾語の落下
 		  knockback_.y -= kGravityAcceleration;
@@ -509,7 +510,10 @@ void Player::OnCollision(const EnemyAttack* enemyAttack) {
 	hitTimer_ = kHitDuration;
 
 	  // 上方向に跳ねるだけ
-	knockback_.y = 0.7f;
+	knockback_.y = 0.5f;
+
+	 velocity_ = KamataEngine::Vector3{0.0f, 0.0f, 0.0f};
+
 }
 
 

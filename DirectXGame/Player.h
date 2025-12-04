@@ -73,7 +73,6 @@ public:
 	const KamataEngine::WorldTransform& GetWorldTransform() const { return worldTransform_; };
 
 	const KamataEngine::Vector3& GetVelocity() const { return velocity_; }
-
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
 
 	void CheckMapCollision(CollisionMapInfo& info);
@@ -101,7 +100,7 @@ public:
 	void OnCollision(Enemy* enemy);
 	void OnCollision(const EnemyAttack* enemyAttack); 
 
-
+	float GetHitTimer() { return hitTimer_; }
 
 	// げった
 	bool isDead() const { return isDead_; }

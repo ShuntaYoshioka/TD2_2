@@ -6,7 +6,6 @@ class Player;
 class CameraController {
 
 public:
-
 	Player* target_ = nullptr;
 	struct Rect {
 		float left = 0.0f;
@@ -17,14 +16,13 @@ public:
 
 	static inline const Rect targetMargin = {-9.0f, 9.0f, -9.0f, 3.0f};
 
-
 	void Initialize();
 
 	void Update();
 
 	void Reset();
 
-	Rect movableArea_ = {0,100,0,100};
+	Rect movableArea_ = {0, 100, 0, 100};
 
 	void SetTarget(Player* target) { target_ = target; }
 
@@ -38,10 +36,9 @@ public:
 
 	static inline const float kVelocityBias = 15.0f;
 
-	const KamataEngine::Camera& GetViewProjection() const {return camera_;}
+	const KamataEngine::Camera& GetViewProjection() const { return camera_; }
 
 private:
 	// カメラ
 	KamataEngine::Camera camera_;
-
 };

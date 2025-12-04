@@ -25,6 +25,7 @@ void CameraController::Update() {
 	camera_.translation_.y = max(camera_.translation_.y, camera_.translation_.y + targetMargin.bottom);
 	camera_.translation_.y = min(camera_.translation_.y, camera_.translation_.y + targetMargin.top);
 
+
 	camera_.translation_.x = max(camera_.translation_.x, movableArea_.left);
 
 	camera_.translation_.x = min(camera_.translation_.x, movableArea_.right);
