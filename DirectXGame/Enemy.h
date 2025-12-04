@@ -33,7 +33,7 @@ public:
 	inline static bool isAllEnemiesCleared = false; 
 
 	inline static float spawnTimer_ = 0.0f;
-	inline static float spawnDelay_ = 120.0f;
+	inline static float spawnDelay_ = 200.0f;
 
 private:
 	KamataEngine::WorldTransform worldTransform_; // ワールドトランスふぉーむ

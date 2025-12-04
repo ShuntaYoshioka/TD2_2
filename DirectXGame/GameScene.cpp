@@ -29,7 +29,7 @@ void GameScene::Initialize() {
 	player_ = new Player();
 
 	// 自キャラ座標をマップチップ番号で指定
-	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(6, 14);
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(18, 10);
 
 	// 弱点をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyPositions = {
@@ -52,9 +52,6 @@ void GameScene::Initialize() {
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
-	// 敵座標をマップチップ番号で指定
-
-	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(16, 18);
 	// 自キャラの初期化
 	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 

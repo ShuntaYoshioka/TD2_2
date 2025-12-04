@@ -80,6 +80,14 @@ void Enemy::OnCollision(const Player* player) {
 
 
 AABB Enemy::GetAABB() {
+
+	//たおしたら当たり判定を消す
+	 if (!alive_ || cleared_) {
+		return {
+		    {0, 0, 0},
+            {0, 0, 0}
+        }; 
+	}
 	KamataEngine::Vector3 worldPos = GetWorldPosition();
 
 	AABB aabb;
