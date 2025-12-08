@@ -58,6 +58,7 @@ void Enemy::Kill() {
 	}
 }
 
+
 void Enemy::disappear() {
 	if (!cleared_) {
 		alive_ = false;

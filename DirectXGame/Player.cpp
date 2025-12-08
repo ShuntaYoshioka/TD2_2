@@ -11,7 +11,7 @@
 using namespace KamataEngine::MathUtility;
 
 void Player::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, const KamataEngine::Vector3& position) {
-	//assert(model);
+	assert(model);
 
 	model_ = model;
 	worldTransform_.Initialize();
@@ -62,40 +62,7 @@ void Player::Update() {
 		CheckMapLanding(collisionMapInfo);
 	}
 
-	
-	
-	
-	//bool landing = false;
-
-
-	// 地面との当たり判定
-	//if (velocity_.y < 0) {
-	//	if (worldTransform_.translation_.y <= 1.0f) {
-	//		landing = true;
-	//	}
-	//}
-
-	// 接地判定
-	//if (onGround_) {
-		// ジャンプ開始
-	//	if (velocity_.y > 0.0f) {
-	//		onGround_ = false;
-	//	}
-	//} else {
-		// 着地
-	//	if (landing) {
-	//		worldTransform_.translation_.y = 1.0f;
-	//		velocity_.x *= (1.0f - kAttenuation);
-	//		velocity_.y = 0.0f;
-	//		onGround_ = true;
-	//	}
-	//}
-
-	
-
-
 	AnimateTurn();
-
 
 	// 行列の更新
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);

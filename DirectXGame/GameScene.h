@@ -55,6 +55,8 @@ public:
 
 	KamataEngine::Model* modelEnemyAttack_ = nullptr;
 
+	KamataEngine::Model* modelBossEnemy_ = nullptr;
+
 	// ワールドトランスフォーム
 	KamataEngine::WorldTransform worldTransform_;
 
@@ -67,8 +69,13 @@ public:
 	// sky
 	Skydome* skydome_ = nullptr;
 
-	// 敵
+	// ボス
+	KamataEngine::WorldTransform* objBossEnemy_ = nullptr;
+
+	// 敵攻撃
 	std::vector<Enemy*> enemies_;
+
+
 
 	//果物
 	std::vector<EnemyAttack*> enemyAttacks_;

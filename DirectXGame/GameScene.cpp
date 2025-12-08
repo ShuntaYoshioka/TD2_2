@@ -20,6 +20,7 @@ void GameScene::Initialize() {
 	modelEnemy_ = Model::CreateFromOBJ("enemy", true);
 	modelDeathParticle_ = Model::CreateFromOBJ("deathParticle", true);
 	modelEnemyAttack_ = Model::CreateFromOBJ("fruit", true);
+	modelBossEnemy_ = Model::CreateFromOBJ("Tree", true);
 	// マップチップフィールドの生成
 	mapChipField_ = new MapChipField;
 	// マップチップフィールドの初期化
@@ -30,6 +31,17 @@ void GameScene::Initialize() {
 
 	// 自キャラ座標をマップチップ番号で指定
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(18, 10);
+
+	//ボスの描画
+	objBossEnemy_ = new WorldTransform();
+	objBossEnemy_->Initialize();
+
+	KamataEngine::Vector3 basePos = playerPosition;
+	objBossEnemy_->translation_ = {
+	    basePos.x, 
+		basePos.y - 6.0f,
+	    basePos.z + 30.0f
+	};
 
 	// 弱点をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyPositions = {
@@ -274,6 +286,12 @@ void GameScene::Update() {
 		enemyAttack->Move();
 	}
 
+	// ===== ボスのワールド行列更新 =====
+	if (objBossEnemy_) {
+		objBossEnemy_->matWorld_ = MakeAffineMatrix(objBossEnemy_->scale_, objBossEnemy_->rotation_, objBossEnemy_->translation_);
+		objBossEnemy_->TransferMatrix();
+	}
+
 	// カメラコントロール
 	if (!player_->isHit()) {
 
@@ -351,6 +369,10 @@ void GameScene::Draw() {
 			player_->Draw();
 	}
 
+	if (objBossEnemy_ && modelBossEnemy_) {
+		modelBossEnemy_->Draw(*objBossEnemy_, camera_);
+	}
+
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw();
 	}
@@ -375,6 +397,10 @@ GameScene::~GameScene() {
 	delete modelEnemy_;
 	delete deathParticles_;
 	delete fade_;
+
+	delete objBossEnemy_;
+	delete modelBossEnemy_;
+
 	for (Enemy* enemy : enemies_) {
 		delete enemy;
 	}

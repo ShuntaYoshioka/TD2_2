@@ -11,13 +11,14 @@ public:
 	void Update();
 	void Draw();
 
-  bool IsAlive() const { return alive_; }
+    bool IsAlive() const { return alive_; }
 	bool IsCleared() const { return cleared_; }
 
 
 	void Kill(); 
 	void disappear();
 	void MarkCleared() { cleared_ = true; }
+	void Move();
 
 	KamataEngine::Vector3 velocity_ = {};
 	// AABBを取得
@@ -31,7 +32,7 @@ public:
 	inline static bool isAllEnemiesCleared = false; 
 
 	inline static float spawnTimer_ = 0.0f;
-	inline static float spawnDelay_ = 1000.0f;
+	inline static float spawnDelay_ = 600.0f;
 
 private:
 	KamataEngine::WorldTransform worldTransform_; // ワールドトランスふぉーむ
@@ -40,6 +41,10 @@ private:
 
 	bool alive_ = false; // 現在表示中か
 	bool cleared_ = false; // 衝突済みか
+
+	KamataEngine::WorldTransform* bossTransform_;
+
+
 
 	KamataEngine::Vector3 spawnPosition_;
 };
