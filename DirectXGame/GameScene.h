@@ -75,7 +75,7 @@ public:
 	// 敵攻撃
 	std::vector<Enemy*> enemies_;
 
-
+	Enemy* enemy_ = nullptr;
 
 	//果物
 	std::vector<EnemyAttack*> enemyAttacks_;

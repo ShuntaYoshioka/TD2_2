@@ -31,6 +31,7 @@ void Enemy::Update() {
 	if (!alive_) {
 		spawnTimer_ += 1.0f;
 
+
 		if (spawnTimer_ >= spawnDelay_) {
 			alive_ = true; 
 			worldTransform_.translation_ = spawnPosition_;

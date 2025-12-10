@@ -34,6 +34,7 @@ public:
 	inline static float spawnTimer_ = 0.0f;
 	inline static float spawnDelay_ = 600.0f;
 
+
 private:
 	KamataEngine::WorldTransform worldTransform_; // ワールドトランスふぉーむ
 	KamataEngine::Model* model_ = nullptr;        // モデル
