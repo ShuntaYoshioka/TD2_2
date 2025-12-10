@@ -32,7 +32,7 @@ public:
 	inline static bool isAllEnemiesCleared = false; 
 
 	inline static float spawnTimer_ = 0.0f;
-	inline static float spawnDelay_ = 600.0f;
+	inline static float spawnDelay_ = 800.0f;
 
 
 private:

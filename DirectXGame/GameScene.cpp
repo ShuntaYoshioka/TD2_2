@@ -345,10 +345,14 @@ void GameScene::Update() {
 		// camera_.UpdateMatrix();
 	}
 
+
+#ifdef _DEBUG
 	if (Input::GetInstance()->PushKey(DIK_SPACE)) {
 		phase_ = Phase::kFadeOut;
 		fade_->Start(Fade::Status::FadeOut, 0.5f); 
 	}
+#endif
+
 }
 
 void GameScene::Draw() {

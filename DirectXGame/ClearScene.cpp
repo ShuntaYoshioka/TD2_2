@@ -5,6 +5,7 @@ using namespace KamataEngine;
 ClearScene::~ClearScene() { delete fade_; }
 
 void ClearScene::Initialize() {
+
 	// 3Dモデル
 	model_ = Model::CreateFromOBJ("clear");
 
@@ -17,6 +18,7 @@ void ClearScene::Initialize() {
 	fade_->Initialize();
 
 	fade_->Start(Fade::Status::FadeIn, 1.0f);
+
 }
 
 void ClearScene::Update() {
