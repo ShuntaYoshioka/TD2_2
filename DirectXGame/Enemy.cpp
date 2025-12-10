@@ -102,7 +102,7 @@ AABB Enemy::GetAABB() {
 
 	aabb.max = {
 	    worldPos.x + 1.0f / 2.0f,
-	    worldPos.y + 1.0f / 2.0f,
+	    worldPos.y + (1.0f / 2.0f) + 3.0f,
 	    worldPos.z + 1.0f / 2.0f,
 	};
 	return aabb;

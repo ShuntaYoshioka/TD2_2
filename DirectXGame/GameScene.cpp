@@ -15,7 +15,7 @@ void GameScene::Initialize() {
 	modelBlock_ = Model::CreateFromOBJ("block");
 	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
 	modelPlayer_ = Model::CreateFromOBJ("player", true);
-	modelEnemy_ = Model::CreateFromOBJ("enemy", true);
+	modelEnemy_ = Model::CreateFromOBJ("tamasi", true);
 	modelDeathParticle_ = Model::CreateFromOBJ("deathParticle", true);
 	modelEnemyAttack_ = Model::CreateFromOBJ("fruit", true);
 	modelBossEnemy_ = Model::CreateFromOBJ("Tree", true);
@@ -43,10 +43,10 @@ void GameScene::Initialize() {
 
 	//弱点をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyPositions = {
-	    {6,  5 }, // 1つ目
-	    {29, 5 },
-	    {6,  12},
-	    {29, 12},
+	    {3,  6 }, // 1つ目
+	    {32, 6 },
+	    {3,  13},
+	    {32, 13},
 	};
 
 	//敵の初期化
