@@ -17,13 +17,10 @@ public:
 	~TitleScene();
 
 	KamataEngine::Model* model_;
-	KamataEngine::Model* modelPlayer_;
 
 	KamataEngine::Camera camera_;
 
 	KamataEngine::WorldTransform worldTransform_;
-
-	KamataEngine::WorldTransform worldTransformPlayer_;
 
 	bool isFinished() const { return finished_; }
 

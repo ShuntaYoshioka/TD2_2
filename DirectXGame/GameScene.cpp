@@ -11,6 +11,9 @@ void GameScene::Initialize() {
 
 	phase_ = Phase::kFadeIn;
 
+	finished_ = false;
+
+
 	//3Dモデルの生成
 	modelBlock_ = Model::CreateFromOBJ("block");
 	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
@@ -340,6 +343,11 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の更新と転送
 		camera_.TransferMatrix();
 		// camera_.UpdateMatrix();
+	}
+
+	if (Input::GetInstance()->PushKey(DIK_SPACE)) {
+		phase_ = Phase::kFadeOut;
+		fade_->Start(Fade::Status::FadeOut, 0.5f); 
 	}
 }
 

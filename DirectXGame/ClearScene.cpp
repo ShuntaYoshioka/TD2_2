@@ -6,7 +6,7 @@ ClearScene::~ClearScene() { delete fade_; }
 
 void ClearScene::Initialize() {
 	// 3Dモデル
-	model_ = Model::CreateFromOBJ("titleFont");
+	model_ = Model::CreateFromOBJ("clear");
 
 	// カメラ初期化
 	camera_.Initialize();

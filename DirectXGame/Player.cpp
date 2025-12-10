@@ -11,7 +11,6 @@
 using namespace KamataEngine::MathUtility;
 
 void Player::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera, const KamataEngine::Vector3& position) {
-	assert(model);
 
 	model_ = model;
 	worldTransform_.Initialize();

@@ -9,14 +9,12 @@ TitleScene::~TitleScene() {
 
 void TitleScene::Initialize() {
 	// 3Dモデル
-	model_ = Model::CreateFromOBJ("titleFont");
-	modelPlayer_ = Model::CreateFromOBJ("player");
+	model_ = Model::CreateFromOBJ("title");
 
 	// カメラ初期化
 	camera_.Initialize();
 
 	worldTransform_.Initialize();
-	worldTransformPlayer_.Initialize();
 
 	fade_ = new Fade();
 	fade_->Initialize();
@@ -55,8 +53,6 @@ void TitleScene::Draw() {
 	Model::PreDraw(dxCommon->GetCommandList());
 
 	model_->Draw(worldTransform_, camera_);
-
-	modelPlayer_->Draw(worldTransformPlayer_, camera_);
 
 Model::PostDraw();
 
