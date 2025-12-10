@@ -10,10 +10,8 @@ using namespace KamataEngine;
 void GameScene::Initialize() {
 
 	phase_ = Phase::kFadeIn;
-	// ファイル名を指定してテクスチャを読み込む
-	textureHandle_ = TextureManager::Load("./Resources./uvChecker.png");
 
-	// 3Dモデルの生成
+	//3Dモデルの生成
 	modelBlock_ = Model::CreateFromOBJ("block");
 	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
 	modelPlayer_ = Model::CreateFromOBJ("player", true);
@@ -21,15 +19,15 @@ void GameScene::Initialize() {
 	modelDeathParticle_ = Model::CreateFromOBJ("deathParticle", true);
 	modelEnemyAttack_ = Model::CreateFromOBJ("fruit", true);
 	modelBossEnemy_ = Model::CreateFromOBJ("Tree", true);
-	// マップチップフィールドの生成
+	//マップチップフィールドの生成
 	mapChipField_ = new MapChipField;
-	// マップチップフィールドの初期化
+	//マップチップフィールドの初期化
 	mapChipField_->LoadMapchipCsv("Resources/blocks.csv");
 
-	// 自キャラ生成
+	//自キャラ生成
 	player_ = new Player();
 
-	// 自キャラ座標をマップチップ番号で指定
+	//自キャラ座標をマップチップ番号で指定
 	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(18, 10);
 
 	//ボスの描画
@@ -43,7 +41,7 @@ void GameScene::Initialize() {
 	    basePos.z + 30.0f
 	};
 
-	// 弱点をマップチップ番号で指定
+	//弱点をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyPositions = {
 	    {6,  5 }, // 1つ目
 	    {29, 5 },
@@ -51,7 +49,7 @@ void GameScene::Initialize() {
 	    {29, 12},
 	};
 
-	// 敵の初期化
+	//敵の初期化
 	for (const auto& tilePos : enemyPositions) {
 		Enemy* newEnemy = new Enemy();
 		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(static_cast<uint32_t>(tilePos.x), static_cast<uint32_t>(tilePos.y));
@@ -61,17 +59,17 @@ void GameScene::Initialize() {
 		enemies_.push_back(newEnemy);
 	}
 
-	// ワールドトランスフォームの初期化
+	//ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 
-	// 自キャラの初期化
+	//自キャラの初期化
 	player_->Initialize(modelPlayer_, &camera_, playerPosition);
 
 	skydome_ = new Skydome();
 
 	player_->SetMapChipField(mapChipField_);
 
-	// カメラの初期化
+	//カメラの初期化
 	camera_.Initialize();
 
 	cameraController_ = new CameraController();
@@ -82,11 +80,11 @@ void GameScene::Initialize() {
 	CameraController::Rect cameraAera = {10.0f, 24.0f, 0.0f, 32.0f};
 	cameraController_->SetMovableArea(cameraAera);
 
-	// 仮生成パーティクル
+	//仮生成パーティクル
 	deathParticles_ = new DeathParticles;
 	deathParticles_->Initialize(modelDeathParticle_, &camera_, playerPosition);
 
-	// 敵の攻撃をマップチップ番号で指定
+	//敵の攻撃をマップチップ番号で指定
 	std::vector<KamataEngine::Vector2> enemyAttackPositions = {
 	    {3,  -1}, // 1つ目
 	    {5,  -1},
@@ -105,7 +103,7 @@ void GameScene::Initialize() {
         {31, -1},
 	};
 
-	// 果物の初期化
+	//果物の初期化
 	for (const auto& tilePos : enemyAttackPositions) {
 		EnemyAttack* newenemyAttack = new EnemyAttack();
 		Vector3 enemyAttackPosition = mapChipField_->GetMapChipPositionByIndex(static_cast<uint32_t>(tilePos.x), static_cast<uint32_t>(tilePos.y));
@@ -116,7 +114,7 @@ void GameScene::Initialize() {
 
 	enemyAttackStartFlags_.resize(enemyAttacks_.size(), false);
 
-	// 他の初期化
+	//他の初期化
 	skydome_->Initialize(modelSkydome_, &camera_);
 
 	GenerateBlocks();
@@ -225,6 +223,7 @@ void GameScene::ChangePhase() {
 	case Phase::kClear:
 		phase_ = Phase::kFadeOut;
 		fade_->Start(Fade::Status::FadeOut, 1.0f);
+		break;
 
 	case Phase::kFadeIn:
 		if (fade_->isFinished()) {
